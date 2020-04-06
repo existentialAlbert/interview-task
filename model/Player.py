@@ -4,9 +4,6 @@ import pandas
 
 from model.Army import Army
 from model.Buildings.BarrackFactory import BarrackFactory
-from model.Units.Archer import Archer
-from model.Units.Knight import Knight
-from model.Units.Mage import Mage
 
 
 class Player(Thread):
@@ -16,7 +13,8 @@ class Player(Thread):
            "load - restore your army" \
            "buy [type] [amount] - buy some units" \
            "unite - unite your squads and units in a new squad" \
-           "print - get info about your army"
+           "print - get info about your army" \
+           "info [id] - info about concrete unit"
 
     def __init__(self):
         super().__init__()

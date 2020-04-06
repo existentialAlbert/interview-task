@@ -12,6 +12,8 @@ class Army:
         self.squads = {}
 
     def setArmy(self, units, squads):
+        self.units = {}
+        self.squads = {}
         un = []
         for i in units:
             unit = None
