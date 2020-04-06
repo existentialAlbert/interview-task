@@ -35,13 +35,13 @@ class Player(Thread):
 
     def alterGold(self, value):
         if self.gold + value < 0:
-            print('Not enough gold! You have ' + str(self.gold))
-            return
+            raise BaseException('Not enough gold! You have ' + str(self.gold))
+
         else:
             self.gold += value
-        label = 'increased' if value > 0 else 'decreased'
-        print('Your amount of gold', label, 'on', abs(value), end=".\n")
-        print('Now it is', self.gold)
+            label = 'increased' if value > 0 else 'decreased'
+            print('Your amount of gold', label, 'on', abs(value), end=".\n")
+            print('Now it is', self.gold)
 
     def execute(self, command):
         command = str.split(command, " ")
@@ -52,9 +52,9 @@ class Player(Thread):
             elif c == 'buy':
                 for i in self.__buildings:
                     if i.type == command[1]:
+                        self.alterGold(-i.recruit().price * int(command[2]))
                         for j in range(int(command[2])):
                             self.__army.add(i.recruit())
-                        self.alterGold(-i.recruit().price * int(command[2]))
                         print('Recruited', command[2], 'new', command[1] + 's')
                         break
                 else:
@@ -119,6 +119,8 @@ class Player(Thread):
                 raise SyntaxError
         except IndexError:
             print("Incorrect amount of arguments!")
+        except BaseException as e:
+            print(e)
 
     @staticmethod
     def fromCSVtoList(csv):
